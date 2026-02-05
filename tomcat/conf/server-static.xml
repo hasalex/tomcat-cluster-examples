@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Server port="-1">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <GlobalNamingResources>
+    <Resource name="UserDatabase" auth="Container"
+      type="org.apache.catalina.UserDatabase"
+      description="User database that can be updated and saved"
+      factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+      pathname="conf/tomcat-users.xml" />
+  </GlobalNamingResources>
+
+  <Service name="Catalina">
+    <Connector port="8080" protocol="HTTP/1.1" redirectPort="8443" />
+
+    <Engine name="Catalina" defaultHost="localhost">
+      <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">
+        <Manager className="org.apache.catalina.ha.session.DeltaManager"
+                 stateTransferTimeout="0" />
+        <Channel className="org.apache.catalina.tribes.group.GroupChannel">
+          <Membership className="org.apache.catalina.tribes.membership.StaticMembershipService">
+            <Member
+              className="org.apache.catalina.tribes.membership.StaticMember"
+              port="4000"
+              host="tomcat1"
+              uniqueId="{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}" />
+            <Member
+              className="org.apache.catalina.tribes.membership.StaticMember"
+              port="4000"
+              host="tomcat2"
+              uniqueId="{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2}" />
+            <Member
+              className="org.apache.catalina.tribes.membership.StaticMember"
+              port="4000"
+              host="tomcat3"
+              uniqueId="{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3}" />
+          </Membership>
+        </Channel>
+      </Cluster>
+
+      <Realm className="org.apache.catalina.realm.LockOutRealm">
+        <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase" />
+      </Realm>
+      <Host name="localhost" appBase="webapps"
+        unpackWARs="true" autoDeploy="false">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+          prefix="localhost_access_log" suffix=".txt"
+          pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+      </Host>
+    </Engine>
+  </Service>
+</Server>

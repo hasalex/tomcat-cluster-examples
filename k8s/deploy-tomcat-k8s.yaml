@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat
+spec:
+  selector:
+    matchLabels:
+      app: tomcat
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      serviceAccountName: tomcat
+      containers:
+      - name: tomcat
+        image: jtips/tomcat:k8s
+        imagePullPolicy: Never
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        - name: cluster
+          containerPort: 4000
+          protocol: TCP
+        env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: KUBERNETES_LABELS
+          value: "app=tomcat"
