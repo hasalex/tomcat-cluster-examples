@@ -12,6 +12,8 @@ docker build --tag jtips/tomcat:simple --build-arg=SERVER_XML_FILE=server-simple
 docker build --tag jtips/tomcat:static --build-arg=SERVER_XML_FILE=server-static.xml ./tomcat
 docker build --tag jtips/tomcat:backup --build-arg=SERVER_XML_FILE=server-backup.xml ./tomcat
 docker build --tag jtips/tomcat:dns    --build-arg=SERVER_XML_FILE=server-dns.xml    ./tomcat
+
+docker build --tag jtips/derby ./database
 ```
 
 ### Run the services
@@ -63,6 +65,7 @@ kubectl create secret tls tls-key --key .tls/minikube.local-key.pem --cert .tls/
 kubectl apply -f k8s/cluster-config.yaml
 minikube addons enable ingress
 kubectl apply -f k8s/ingress.yaml
+kubectl apply -f k8s/deploy-db.yaml
 ```
 
 ### Create images
@@ -73,6 +76,8 @@ minikube image build --tag jtips/tomcat:simple --build-opt="build-arg=SERVER_XML
 minikube image build --tag jtips/tomcat:dns    --build-opt="build-arg=SERVER_XML_FILE=server-dns.xml"    ./tomcat
 minikube image build --tag jtips/tomcat:k8s    --build-opt="build-arg=SERVER_XML_FILE=server-k8s.xml"    ./tomcat
 minikube image build --tag jtips/tomcat:backup --build-opt="build-arg=SERVER_XML_FILE=server-backup.xml" ./tomcat
+
+minikube image build --tag jtips/derby ./database
 ```
 
 ### Create Tomcat service

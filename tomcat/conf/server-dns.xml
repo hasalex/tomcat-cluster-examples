@@ -7,10 +7,15 @@
 
   <GlobalNamingResources>
     <Resource name="UserDatabase" auth="Container"
-      type="org.apache.catalina.UserDatabase"
-      description="User database that can be updated and saved"
-      factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
-      pathname="conf/tomcat-users.xml" />
+              type="org.apache.catalina.UserDatabase"
+              description="User database that can be updated and saved"
+              factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+              pathname="conf/tomcat-users.xml" />
+    <Resource name="jdbc/sewa-global-ds"
+              auth="Container" type="javax.sql.DataSource"
+              driverClassName="org.apache.derby.jdbc.ClientDriver"
+              url="${DB_URL}"
+              username="${DB_USERNAME}" password="${DB_PASSWORD}"/>
   </GlobalNamingResources>
 
   <Service name="Catalina">
@@ -20,15 +25,13 @@
       <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster">        
         <Manager className="org.apache.catalina.ha.session.DeltaManager"
                  stateTransferTimeout="0" />
-        <!-- <Manager className="org.apache.catalina.ha.session.BackupManager"
-                 dropTime="15000" frequency="2000" /> -->
         <Channel className="org.apache.catalina.tribes.group.GroupChannel">
           <Membership className="org.apache.catalina.tribes.membership.cloud.CloudMembershipService"
                       membershipProviderClassName="org.apache.catalina.tribes.membership.cloud.DNSMembershipProvider"/>
         </Channel>
 
         <Interceptor className="org.apache.catalina.tribes.group.interceptors.EncryptInterceptor"
-                      encryptionKey="AES is the way"/>
+                      encryptionKey="${secret.tribes-encryption}"/>
         <Interceptor className="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector"/>
         <Interceptor className="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor"/>
       </Cluster>

@@ -15,3 +15,4 @@ services:
         limits:
           memory: 256M
           cpus: 2
+    env_file: tomcat.env

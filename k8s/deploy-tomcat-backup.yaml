@@ -16,6 +16,10 @@ spec:
       - name: tomcat
         image: jtips/tomcat:backup
         imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "2"
         ports:
         - name: http
           containerPort: 8080
@@ -23,3 +27,6 @@ spec:
         - name: cluster
           containerPort: 4000
           protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: tomcat-config

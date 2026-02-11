@@ -7,10 +7,15 @@
 
   <GlobalNamingResources>
     <Resource name="UserDatabase" auth="Container"
-      type="org.apache.catalina.UserDatabase"
-      description="User database that can be updated and saved"
-      factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
-      pathname="conf/tomcat-users.xml" />
+              type="org.apache.catalina.UserDatabase"
+              description="User database that can be updated and saved"
+              factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+              pathname="conf/tomcat-users.xml" />
+    <Resource name="jdbc/sewa-global-ds"
+              auth="Container" type="javax.sql.DataSource"
+              driverClassName="org.apache.derby.jdbc.ClientDriver"
+              url="${DB_URL}"
+              username="${DB_USERNAME}" password="${DB_PASSWORD}"/>
   </GlobalNamingResources>
 
   <Service name="Catalina">

@@ -1,6 +1,15 @@
 apiVersion: v1
+kind: Secret
+metadata:
+  name: tomcat-secret
+data:
+  tribes-encryption: QUVTIGlzIHRoZSB3YXk=
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: cluster-config
+  name: tomcat-config
 data:
-  host-ip: 192.168.49.2
+  DB_URL: "jdbc:derby://db.default.svc.cluster.local:1527/sewadb"
+  DB_USERNAME: sa
+  DB_PASSWORD: sapwd

@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-ingress
+  name: ingress
 spec:
   ingressClassName: nginx
   tls:
@@ -10,7 +10,7 @@ spec:
   - host: tomcat.jtips.local
     http:
       paths:
-      - path: /
+      - path: /msg
         pathType: Prefix
         backend:
           service:

@@ -11,9 +11,11 @@ services:
     image: jtips/tomcat:dns
     environment:
       DNS_MEMBERSHIP_SERVICE_NAME: tomcat0
+      TRIBES_KEY: "EAS is the way"
     deploy:
       replicas: 3
       resources:
         limits:
           memory: 256M
           cpus: 2
+    env_file: tomcat.env

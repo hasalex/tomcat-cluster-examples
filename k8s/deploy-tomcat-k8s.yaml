@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: tomcat
-  replicas: 3
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,9 +14,13 @@ spec:
     spec:
       serviceAccountName: tomcat
       containers:
-      - name: tomcat
+      - name: tomcat3
         image: jtips/tomcat:k8s
         imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "2"
         ports:
         - name: http
           containerPort: 8080
@@ -31,3 +35,6 @@ spec:
               fieldPath: metadata.namespace
         - name: KUBERNETES_LABELS
           value: "app=tomcat"
+        envFrom:
+        - configMapRef:
+            name: tomcat-config

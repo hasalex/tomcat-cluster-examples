@@ -16,6 +16,10 @@ spec:
       - name: tomcat
         image: jtips/tomcat:dns
         imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "2"
         ports:
         - name: http
           containerPort: 8080
@@ -26,3 +30,6 @@ spec:
         env:
         - name: DNS_MEMBERSHIP_SERVICE_NAME
           value: tomcat0
+        envFrom:
+        - configMapRef:
+            name: tomcat-config

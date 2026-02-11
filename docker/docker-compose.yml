@@ -1,5 +1,7 @@
 name: tomcat
 services:
+  db:
+    image: jtips/derby
   nginx:
     image: nginx
     ports:
@@ -15,3 +17,4 @@ services:
         limits:
           memory: 256M
           cpus: 2
+    env_file: tomcat.env
