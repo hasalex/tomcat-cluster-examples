@@ -3,7 +3,8 @@ kind: Secret
 metadata:
   name: tomcat-secret
 data:
-  tribes-encryption: QUVTIGlzIHRoZSB3YXk=
+  tribes_encryption: QUVTIGlzIHRoZSB3YXk=
+  db_password: c2Fwd2QK
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -12,4 +13,3 @@ metadata:
 data:
   DB_URL: "jdbc:derby://db.default.svc.cluster.local:1527/sewadb"
   DB_USERNAME: sa
-  DB_PASSWORD: sapwd

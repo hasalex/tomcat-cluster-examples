@@ -15,7 +15,7 @@
               auth="Container" type="javax.sql.DataSource"
               driverClassName="org.apache.derby.jdbc.ClientDriver"
               url="${DB_URL}"
-              username="${DB_USERNAME}" password="${DB_PASSWORD}"/>
+              username="${DB_USERNAME}" password="${chomp:secrets.db_password}"/>
   </GlobalNamingResources>
 
   <Service name="Catalina">

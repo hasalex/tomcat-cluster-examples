@@ -1,5 +1,7 @@
 name: tomcat
 services:
+  db:
+    image: jtips/derby
   nginx:
     image: nginx
     ports:
@@ -15,4 +17,11 @@ services:
         limits:
           memory: 256M
           cpus: 2
+    environment:
+      SERVICE_BINDING_ROOT: /run
     env_file: tomcat.env
+    secrets:
+    - db_password
+secrets:
+   db_password:
+     file: db-password.txt

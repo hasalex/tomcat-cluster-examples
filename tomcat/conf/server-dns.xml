@@ -15,7 +15,7 @@
               auth="Container" type="javax.sql.DataSource"
               driverClassName="org.apache.derby.jdbc.ClientDriver"
               url="${DB_URL}"
-              username="${DB_USERNAME}" password="${DB_PASSWORD}"/>
+              username="${DB_USERNAME}" password="${chomp:secrets.db_password}"/>
   </GlobalNamingResources>
 
   <Service name="Catalina">
@@ -31,7 +31,7 @@
         </Channel>
 
         <Interceptor className="org.apache.catalina.tribes.group.interceptors.EncryptInterceptor"
-                      encryptionKey="${secret.tribes-encryption}"/>
+                      encryptionKey="${chomp:secret.tribes_encryption}"/>
         <Interceptor className="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector"/>
         <Interceptor className="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor"/>
       </Cluster>

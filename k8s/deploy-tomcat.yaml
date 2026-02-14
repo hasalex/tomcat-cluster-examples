@@ -24,6 +24,17 @@ spec:
         - name: http
           containerPort: 8080
           protocol: TCP
+        env:
+        - name: SERVICE_BINDING_ROOT
+          value: /binding        
         envFrom:
         - configMapRef:
             name: tomcat-config
+        volumeMounts:
+        - name: secret-binding
+          mountPath: "/binding/secrets"
+          readOnly: true
+      volumes:
+      - name: secret-binding
+        secret:
+          secretName: tomcat-secret
